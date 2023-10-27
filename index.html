@@ -108,7 +108,19 @@
     
 
     // 👉 CHALLENGE 2
-    function mineSweeper() {
+    function mineSweeper(grid, x, y) {
+  if (x < 1 || x > 3 || y < 1 || y > 3) {
+    return "invalid coordinates";
+  }
+
+  const square = grid[y - 1][x - 1];
+
+  if (square === "🟥") {
+    return "🟥 💀";
+  } else if (square === "🟦") {
+    return "🟦 🥳";
+  }
+}
       // 🧠 mineSweeper takes a grid as its first argument, and coordinates x and y as the second and third args
       //  The grid is an array of arrays in the following format: [["🟥","🟦","🟥"],["🟦","🟥","🟥"],["🟥","🟦","🟦"]]
       //  Each subarray is a row of the grid, the first subarray being the top row:
@@ -127,10 +139,24 @@
       //    * If the player lands on blue, return the string "🟦 🥳"
       // 🧠 Edge cases:
       //    * If the x or y coordinates are under 1 or over 3, return the string "invalid coordinates"
-    }
+    
 
     // 👉 CHALLENGE 3
-    function booleanize() {
+    function booleanize(obj) {
+  for (let key in obj) {
+    if (key.length > 9) {
+      return "shorten all prop names to 9 chars or less";
+    }
+    if (obj[key] === 0) {
+      obj[key] = false;
+    } else if (obj[key] === 1) {
+      obj[key] = true;
+    } else if (obj[key] === null) {
+      delete obj[key];
+    }
+  }
+  return obj;
+}
       // 🧠 booleanize takes an object as its single argument, which can have any number of properties
       // Loop over the properties and then return the object, after applying the following transformations:
       //    * If a value is the number zero, it must be transformed into the Boolean false
@@ -139,10 +165,28 @@
       // 🧠 Edge cases:
       //    * If a property name exceeds 9 characters, return the string "shorten all prop names to 9 chars or less"
       // 🌟 HINT: careful not to perform any unintended changes on the object
-    }
+    
 
     // 👉 CHALLENGE 4
-    function scrub() {
+    function scrub(text, forbidden) {
+  if (text === "") {
+    return "";
+  }
+  
+  const words = text.split(" ");
+  const scrubbedWords = [];
+
+  for (let word of words) {
+    if (forbidden.includes(word)) {
+      const scrubbedWord = "x".repeat(word.length);
+      scrubbedWords.push(scrubbedWord);
+    } else {
+      scrubbedWords.push(word);
+    }
+  }
+
+  return scrubbedWords.join(" ");
+}
       // 🧠 scrub takes a string "text" as its first argument, and an array of forbidden words "forbidden" as its second
       // Any word in the text included in the array of forbidden words is replaced with a word of equal length but made of lowcase "x"
       // The scrubbed text is then returned from the function, as seen in the examples below
@@ -154,10 +198,28 @@
       //    scrub("aces high", ["high", "aces", "hearts"]) // returns "xxxx xxxx"
       //    scrub("", ["high", "aces""]) // returns ""
       // 🌟 HINT: useful array methods to use are `push`, `indexOf`, `split`, `join`
-    }
+    
 
     // 👉 CHALLENGE 5
-    function normalizePhoneNumber() {
+    function normalizePhoneNumber(number) {
+  let template = "(XXX) XXX-XXXX";
+
+  if (number.length !== 10) {
+    return "type a 10-digit number";
+  }
+
+  for (let i = template.length - 1; i >= 0; i--) {
+    if (template[i] === "X") {
+      template = template.substring(0, i) + number.charAt(number.length - 1) + template.substring(i + 1);
+      number = number.slice(0, -1);
+    }
+  }
+
+  if (number>1 || number< 9) {
+    return"invalid phone number";
+  }
+  return template;
+}
       // 🧠 normalizePhoneNumber takes a string as its only argument, representing a ten-digit number
       // The function returns a string formatted as seen below
       // 🧠 Examples of usage:
@@ -169,7 +231,7 @@
       // 🌟 HINT: instead of looping over the number's digits, loop backwards over a template "(XXX) XXX-XXXX"
       // 🌟 HINT: at each iteration, if the current character is an "X", replace it with the result of popping a digit from the number
       // 🌟 HINT: if you'd rather loop forwards, use `shift` instead of `pop`
-    }
+    
 
     // 👉 CHALLENGE 6 (bonus, NOT graded)
     function diceRolls() {
