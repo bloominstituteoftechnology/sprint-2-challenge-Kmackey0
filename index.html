@@ -203,21 +203,22 @@
     // 👉 CHALLENGE 5
     function normalizePhoneNumber(number) {
   let template = "(XXX) XXX-XXXX";
-
+  
   if (number.length !== 10) {
     return "type a 10-digit number";
   }
+  
+  if(isNaN(number)){
+    return"invalid phone number";}   
 
-  for (let i = template.length - 1; i >= 0; i--) {
+
+  for (let i = template.length - 1; i >= 0; i--){
     if (template[i] === "X") {
       template = template.substring(0, i) + number.charAt(number.length - 1) + template.substring(i + 1);
       number = number.slice(0, -1);
     }
-  }
-
-  if (number>1 || number< 9) {
-    return"invalid phone number";
-  }
+ 
+}
   return template;
 }
       // 🧠 normalizePhoneNumber takes a string as its only argument, representing a ten-digit number
